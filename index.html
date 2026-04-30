@@ -12,7 +12,7 @@
             font-family: 'Segoe UI', Arial, sans-serif;
         }
 
-        /* --- VISUALIZZAZIONE PC (Invariata, come piace a te) --- */
+        /* --- VISUALIZZAZIONE PC --- */
         @media (min-width: 769px) {
             html, body { height: 100%; overflow: hidden; }
             .scroll-container {
@@ -47,30 +47,34 @@
             }
         }
 
-        /* --- VISUALIZZAZIONE MOBILE (TESTI GRANDI) --- */
+        /* --- VISUALIZZAZIONE MOBILE (NESSUN TAGLIO) --- */
         @media (max-width: 768px) {
             .scroll-container {
                 display: block;
-                overflow-x: hidden; /* Evita che il sito balli a destra e sinistra */
+                background-color: #FDFCF9;
             }
             section {
                 width: 100%;
-                padding: 10px 0;
-                background-color: #FDFCF9;
-                border-bottom: 1px solid #ddd;
+                /* Aggiungiamo spazio sopra e sotto ogni immagine per separarle bene */
+                padding: 30px 0; 
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border-bottom: 1px solid #eee;
             }
             img {
-                /* Ingrandiamo l'immagine oltre la larghezza dello schermo per rendere i testi leggibili */
-                width: 140%; 
-                margin-left: -20%; /* Centriamo lo zoom */
+                width: 100%; /* L'immagine occupa tutta la larghezza, senza tagli */
                 height: auto;
                 display: block;
+                /* Massima nitidezza per i testi nelle immagini */
+                image-rendering: -webkit-optimize-contrast;
             }
             .footer-content {
                 padding: 40px 20px;
                 text-align: center;
                 font-size: 14px;
                 background: #FDFCF9;
+                color: #333;
             }
         }
     </style>
@@ -79,7 +83,7 @@
 
     <div class="scroll-container">
         <section><img src="sitopag1.png" alt="Studio Lava Home"></section>
-        <section><img src="sitopag2.png" alt="Scegliere Studio Lava"></section>
+        <section><img src="sitopag2.png" alt="Perché scegliere lo Studio Lava"></section>
         <section><img src="sitopag3.png" alt="Chi Siamo Giovanni Lava"></section>
         <section><img src="sitopag4.png" alt="Servizi Studio Lava"></section>
         
