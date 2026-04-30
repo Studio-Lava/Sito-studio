@@ -8,78 +8,67 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         html, body {
-            height: 100%;
             background-color: #FDFCF9;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
 
-        /* Contenitore per lo scroll a scatto */
-        .scroll-container {
-            height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
-        }
-
-        section {
-            height: 100vh;
-            width: 100%;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px; 
-            background-color: #FDFCF9;
-            position: relative;
-        }
-
-        img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            display: block;
-            image-rendering: -webkit-optimize-contrast;
-        }
-
-        /* --- OTTIMIZZAZIONE PER MOBILE --- */
-        @media (max-width: 768px) {
+        /* --- VERSIONE COMPUTER --- */
+        @media (min-width: 769px) {
             .scroll-container {
-                scroll-snap-type: none; /* Disattiviamo lo scatto su mobile per una lettura più libera */
-                height: auto;
-                overflow-y: visible;
+                height: 100vh;
+                overflow-y: scroll;
+                scroll-snap-type: y mandatory;
+                scroll-behavior: smooth;
             }
             section {
-                height: auto; /* La pagina si allunga quanto serve per far leggere il testo grande */
-                min-height: 50vh;
-                scroll-snap-align: none;
-                padding: 20px 10px;
+                height: 100vh;
+                width: 100%;
+                scroll-snap-align: start;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 40px;
+                position: relative;
             }
             img {
-                width: 100%; /* L'immagine occupa tutta la larghezza del telefono */
-                height: auto;
-                max-height: none;
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
             }
             .footer-content {
-                position: relative; /* Il footer si mette in coda invece di coprire il testo */
-                background: #FDFCF9;
-                font-size: 12px;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                background: rgba(253, 252, 249, 0.9);
+                padding: 15px;
+                border-top: 1px solid #eee;
             }
         }
 
-        .footer-content {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            font-size: 11px;
-            color: #666;
-            background: rgba(253, 252, 249, 0.9);
-            padding: 15px;
-            border-top: 1px solid #eee;
+        /* --- VERSIONE MOBILE (SMARTPHONE) --- */
+        @media (max-width: 768px) {
+            section {
+                width: 100%;
+                background-color: #FDFCF9;
+                padding: 0;
+                border-bottom: 2px solid #eee; /* Separa le pagine */
+            }
+            img {
+                width: 100%; /* L'immagine prende tutta la larghezza */
+                height: auto; /* L'altezza si adatta diventando molto lunga */
+                display: block;
+                image-rendering: -webkit-optimize-contrast;
+            }
+            .footer-content {
+                padding: 30px 15px;
+                background: #FDFCF9;
+                font-size: 13px;
+                border-top: 2px solid #8B2C32; /* Un tocco di bordeaux dello studio */
+            }
         }
+
+        img { display: block; margin: 0 auto; }
+        .footer-content { text-align: center; color: #333; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -93,7 +82,9 @@
         <section>
             <img src="sitopag5.png" alt="Contatti Studio Lava Torino">
             <div class="footer-content">
-                <strong>Studio Lava di Giovanni Lava</strong> | Corso Francia 335, Torino | P.IVA 11011470017 | Iscr. Albo n. 1752
+                <strong>Studio Lava di Giovanni Lava</strong><br>
+                Corso Francia 335, Torino<br>
+                P.IVA 11011470017 | Iscr. Albo n. 1752
             </div>
         </section>
     </div>
