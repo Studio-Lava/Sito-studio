@@ -9,10 +9,10 @@
         
         html, body {
             height: 100%;
-            overflow: hidden;
             background-color: #FDFCF9;
         }
 
+        /* Contenitore per lo scroll a scatto */
         .scroll-container {
             height: 100vh;
             overflow-y: scroll;
@@ -28,8 +28,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* AGGIUNTO: Spazio di sicurezza ai bordi per non tagliare i titoli */
-            padding: 5vh 20px; 
+            padding: 40px 20px; 
             background-color: #FDFCF9;
             position: relative;
         }
@@ -41,8 +40,32 @@
             height: auto;
             object-fit: contain;
             display: block;
-            /* Mantiene la nitidezza dei testi */
             image-rendering: -webkit-optimize-contrast;
+        }
+
+        /* --- OTTIMIZZAZIONE PER MOBILE --- */
+        @media (max-width: 768px) {
+            .scroll-container {
+                scroll-snap-type: none; /* Disattiviamo lo scatto su mobile per una lettura più libera */
+                height: auto;
+                overflow-y: visible;
+            }
+            section {
+                height: auto; /* La pagina si allunga quanto serve per far leggere il testo grande */
+                min-height: 50vh;
+                scroll-snap-align: none;
+                padding: 20px 10px;
+            }
+            img {
+                width: 100%; /* L'immagine occupa tutta la larghezza del telefono */
+                height: auto;
+                max-height: none;
+            }
+            .footer-content {
+                position: relative; /* Il footer si mette in coda invece di coprire il testo */
+                background: #FDFCF9;
+                font-size: 12px;
+            }
         }
 
         .footer-content {
@@ -62,15 +85,15 @@
 <body>
 
     <div class="scroll-container">
-        <section><img src="sitopag1.png" alt="Home"></section>
-        <section><img src="sitopag2.png" alt="Perché scegliere lo Studio"></section>
-        <section><img src="sitopag3.png" alt="Chi Siamo"></section>
-        <section><img src="sitopag4.png" alt="Servizi Offerti"></section>
+        <section><img src="sitopag1.png" alt="Studio Lava - Home"></section>
+        <section><img src="sitopag2.png" alt="Perché scegliere lo Studio Lava"></section>
+        <section><img src="sitopag3.png" alt="Chi Siamo - Dott. Giovanni Lava"></section>
+        <section><img src="sitopag4.png" alt="Servizi Offerti dallo Studio"></section>
         
         <section>
-            <img src="sitopag5.png" alt="Contatti">
+            <img src="sitopag5.png" alt="Contatti Studio Lava Torino">
             <div class="footer-content">
-                <strong>Studio Lava di Giovanni Lava</strong> | Corso Francia 335, Torino | P.IVA 11090330013 | Iscr. Albo n. 1658
+                <strong>Studio Lava di Giovanni Lava</strong> | Corso Francia 335, Torino | P.IVA 11011470017 | Iscr. Albo n. 1752
             </div>
         </section>
     </div>
