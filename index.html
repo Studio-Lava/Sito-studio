@@ -1,100 +1,231 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta name="google-site-verification" content="9j4FpgOLA_bv0cdrNXFTadxFFoJ6zbf0cNfeKaNkmsk" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studio Lava - Consulente del Lavoro</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            background-color: #FDFCF9;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-
-        /* --- VISUALIZZAZIONE PC --- */
-        @media (min-width: 769px) {
-            html, body { height: 100%; overflow: hidden; }
-            .scroll-container {
-                height: 100vh;
-                overflow-y: scroll;
-                scroll-snap-type: y mandatory;
-                scroll-behavior: smooth;
-            }
-            section {
-                height: 100vh;
-                width: 100%;
-                scroll-snap-align: start;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 40px;
-                position: relative;
-            }
-            img {
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-            }
-            .footer-content {
-                position: absolute;
-                bottom: 0;
-                width: 100%;
-                background: rgba(253, 252, 249, 0.9);
-                padding: 15px;
-                border-top: 1px solid #eee;
-                text-align: center;
-            }
-        }
-
-        /* --- VISUALIZZAZIONE MOBILE (NESSUN TAGLIO) --- */
-        @media (max-width: 768px) {
-            .scroll-container {
-                display: block;
-                background-color: #FDFCF9;
-            }
-            section {
-                width: 100%;
-                padding: 30px 0; 
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                border-bottom: 1px solid #eee;
-            }
-            img {
-                width: 100%; 
-                height: auto;
-                display: block;
-                image-rendering: -webkit-optimize-contrast;
-            }
-            .footer-content {
-                padding: 40px 20px;
-                text-align: center;
-                font-size: 14px;
-                background: #FDFCF9;
-                color: #333;
-            }
-        }
-    </style>
+  <meta name="google-site-verification" content="9j4FpgOLA_bv0cdrNXFTadxFFoJ6zbf0cNfeKaNkmsk">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Studio Lava affianca aziende e datori di lavoro nella gestione degli adempimenti giuslavoristici, previdenziali e assistenziali.">
+  <title>Studio Lava Giovanni - Consulente del Lavoro a Torino</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Studio Lava di Giovanni Lava",
+      "url": "https://www.studiolava.it/",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Corso Francia 335",
+        "postalCode": "10142",
+        "addressLocality": "Torino",
+        "addressRegion": "TO",
+        "addressCountry": "IT"
+      },
+      "telephone": "+390114051299",
+      "email": "amministrazione@studiolava.it",
+      "taxID": "11011470017"
+    }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#contenuto">Vai al contenuto</a>
 
-    <div class="scroll-container">
-        <section><img src="sitopag1.png" alt="Studio Lava Home"></section>
-        <section><img src="sitopag2.png" alt="Perché scegliere lo Studio Lava"></section>
-        <section><img src="sitopag3.png" alt="Chi Siamo Giovanni Lava"></section>
-        <section><img src="sitopag4.png" alt="Servizi Studio Lava"></section>
-        
-        <section>
-            <img src="sitopag5.png" alt="Contatti Studio Lava">
-            <div class="footer-content">
-                <strong>Studio Lava di Giovanni Lava</strong><br>
-                Corso Francia 335 - 10142 Torino<br>
-                P.IVA 11011470017 | Iscr. Albo n. 1752
-            </div>
-        </section>
-    </div>
+  <header class="site-header">
+    <a class="brand-link" href="#home" aria-label="Studio Lava Giovanni - home">
+      <img src="assets/logo-definitivo-vettoriale-trasparente.svg" alt="" aria-hidden="true">
+      <span>
+        <strong>Studio Lava Giovanni</strong>
+        <small>Consulente del Lavoro</small>
+      </span>
+    </a>
+    <nav class="main-nav" aria-label="Navigazione principale">
+      <a href="#studio">Studio</a>
+      <a href="#professionisti">Professionisti</a>
+      <a href="#servizi">Servizi</a>
+      <a class="nav-contact" href="#contatti">Contatti</a>
+    </nav>
+  </header>
 
+  <main id="contenuto">
+    <section id="home" class="hero section" data-reveal>
+      <div class="hero-copy">
+        <p class="eyebrow">Consulenza del lavoro per aziende e datori di lavoro</p>
+        <h1>Studio Lava Giovanni</h1>
+        <p class="profession">Consulente del Lavoro</p>
+        <p class="hero-text">
+          Lo Studio Lava affianca aziende e datori di lavoro nella gestione degli adempimenti
+          giuslavoristici, previdenziali e assistenziali, offrendo un supporto concreto,
+          aggiornato e personalizzato.
+        </p>
+        <div class="hero-actions" aria-label="Azioni principali">
+          <a class="button primary" href="#contatti">Contatta lo Studio</a>
+          <a class="button secondary" href="#servizi">Consulta i servizi</a>
+        </div>
+      </div>
+      <div class="hero-symbol-wrap" aria-hidden="true">
+        <img class="hero-symbol" src="assets/logo-definitivo-vettoriale-trasparente.svg" alt="">
+      </div>
+      <div class="hero-media" aria-label="Dott. Giovanni Lava">
+        <figure class="hero-portrait">
+          <img src="assets/giovanni-lava-professionale.png" alt="Dott. Giovanni Lava, Consulente del Lavoro">
+        </figure>
+      </div>
+    </section>
+
+    <section id="studio" class="section intro-section" data-reveal>
+      <div class="section-heading">
+        <p class="eyebrow">Approccio</p>
+        <h2>Consulenza chiara, puntuale e personalizzata</h2>
+      </div>
+      <div class="text-columns">
+        <p class="lead-copy">
+          Da oltre tredici anni lo Studio Lava affianca aziende e datori di lavoro
+          nella gestione degli adempimenti giuslavoristici, previdenziali e amministrativi.
+        </p>
+        <p>
+          L'esperienza maturata nel tempo, unita a un team qualificato e in costante formazione,
+          consente di fornire soluzioni chiare, puntuali e in linea con l'evoluzione normativa.
+        </p>
+        <p>
+          Supportiamo aziende e datori di lavoro con consulenza qualificata, aggiornamento costante
+          e soluzioni pratiche per la gestione del personale. Ogni attività viene seguita con
+          attenzione, tempestività e un approccio personalizzato, in linea con le esigenze operative
+          e normative di ciascuna realtà.
+        </p>
+      </div>
+      <div class="studio-numbers" aria-label="Lo Studio in numeri">
+        <p class="numbers-title">Lo Studio in numeri</p>
+        <div class="numbers-grid">
+          <div>
+            <strong>10+</strong>
+            <span>Anni di esperienza</span>
+          </div>
+          <div>
+            <strong>300+</strong>
+            <span>Aziende assistite</span>
+          </div>
+          <div>
+            <strong>100%</strong>
+            <span>Consulenza personalizzata</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="professionisti" class="section professionals-section" data-reveal>
+      <div class="section-heading">
+        <p class="eyebrow">Perché scegliere Studio Lava</p>
+        <h2>Un riferimento professionale per la gestione del personale</h2>
+      </div>
+      <div class="people-grid">
+        <article class="person-card featured">
+          <p class="role">Titolare di Studio</p>
+          <h3>Dott. Giovanni Lava</h3>
+          <p>
+            Consulente del Lavoro iscritto dal 2013 all'Ordine dei Consulenti del Lavoro di Torino.
+            Esperienza pluriennale nell'amministrazione del personale e nel servizio payroll.
+            Docente in corsi di payroll e gestione dell'amministrazione del personale. Ha ricoperto
+            la carica di Consigliere dell'Associazione Giovani Consulenti del Lavoro di Torino.
+          </p>
+          <p>
+            Insieme al proprio team, garantisce un'assistenza a 360° nell'ampio e complesso ambito
+            della normativa giuslavoristica, previdenziale e assistenziale.
+          </p>
+        </article>
+        <article class="person-card">
+          <p class="role">Abilitata Consulente del Lavoro</p>
+          <h3>Dott.ssa Anna Canfora</h3>
+          <p>
+            Collaboratrice dello Studio, abilitata all'esercizio della professione di Consulente
+            del Lavoro. Apporta competenza e rigore nell'amministrazione del personale e nella
+            gestione degli adempimenti giuslavoristici.
+          </p>
+        </article>
+        <article class="person-card">
+          <p class="role">Praticante Consulente del Lavoro</p>
+          <h3>Dott. Andrea Sblendorio</h3>
+          <p>
+            Praticante iscritto presso l'Ordine dei Consulenti del Lavoro. Supporta lo Studio nelle
+            attività di elaborazione paghe, gestione pratiche e consulenza alle aziende clienti,
+            consolidando la propria esperienza professionale.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="servizi" class="section services-section" data-reveal>
+      <div class="section-heading">
+        <p class="eyebrow">Servizi offerti</p>
+        <h2>Attività seguite dallo Studio</h2>
+      </div>
+      <ul class="services-grid" aria-label="Elenco servizi">
+        <li>Elaborazione paghe e contributi</li>
+        <li>Valutazione delle agevolazioni applicabili</li>
+        <li>Pratiche di assunzione, cessazione, proroghe e trasformazione</li>
+        <li>Redazione contratti di lavoro</li>
+        <li>Redazione Privacy</li>
+        <li>Gestione ammortizzatori sociali</li>
+        <li>Gestione Settore Edile, Mut e Cassa Edile</li>
+        <li>Consulenza su contenziosi e vertenze</li>
+        <li>Elaborazione del costo del personale</li>
+        <li>Analisi del costo del lavoro</li>
+        <li>Elaborazione Budget e Forecast</li>
+        <li>Conteggi per differenze retributive</li>
+        <li>Gestione rapporto di lavoro domestico, colf e badanti</li>
+        <li>Accordi premi di produttività</li>
+        <li>Redazione del regolamento aziendale</li>
+        <li>Piani di Welfare aziendale</li>
+      </ul>
+    </section>
+
+    <section class="section final-cta-section" data-reveal>
+      <div class="final-cta">
+        <div>
+          <p class="eyebrow">Supporto operativo</p>
+          <h2>Hai bisogno di supporto nella gestione del personale?</h2>
+          <p>
+            Lo Studio Lava affianca aziende e datori di lavoro con consulenza chiara,
+            aggiornata e personalizzata.
+          </p>
+        </div>
+        <div class="final-cta-actions">
+          <a class="button light" href="#contatti">Contatta lo Studio</a>
+          <a class="button ghost" href="#servizi">Consulta i servizi</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contatti" class="section contact-section" data-reveal>
+      <div class="contact-panel">
+        <div>
+          <p class="eyebrow">Contatti</p>
+          <h2>Studio Lava di Giovanni Lava</h2>
+          <address>
+            Corso Francia n. 335<br>
+            10142 Torino (TO)
+          </address>
+        </div>
+        <div class="contact-details">
+          <p class="opening-hours">
+            <strong>Orari di apertura</strong>
+            <span>Lun-Ven</span>
+            <span>9:00 - 13:00</span>
+            <span>14:00 - 17:00</span>
+          </p>
+          <p><strong>Telefono</strong><br><a href="tel:+390114051299">011.4051299</a></p>
+          <p><strong>Email</strong><br><a href="mailto:amministrazione@studiolava.it">amministrazione@studiolava.it</a></p>
+          <p><strong>Social</strong><br>@studiolavacdl</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Studio Lava di Giovanni Lava - Corso Francia 335, 10142 Torino - P.IVA 11011470017 -
+      Iscr. Albo Consulenti del Lavoro Torino n. 1752
+    </p>
+  </footer>
 </body>
 </html>
