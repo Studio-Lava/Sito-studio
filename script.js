@@ -2,6 +2,21 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 const header = document.querySelector(".site-header");
 const revealItems = document.querySelectorAll("[data-reveal], .person-card, .services-grid li");
 const anchorLinks = document.querySelectorAll('a[href^="#"]');
+const contactModal = document.querySelector("[data-contact-modal]");
+const contactDialog = document.querySelector(".contact-modal__dialog");
+const contactOpenButtons = document.querySelectorAll("[data-contact-open]");
+const contactCloseButtons = document.querySelectorAll("[data-contact-close]");
+const contactForm = document.querySelector("[data-contact-form]");
+const formStatus = document.querySelector("[data-form-status]");
+const focusableSelector = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "textarea:not([disabled])",
+  "select:not([disabled])",
+  "[tabindex]:not([tabindex='-1'])"
+].join(",");
+let previousFocus = null;
 
 function updateHeaderState() {
   header?.classList.toggle("is-scrolled", window.scrollY > 12);
@@ -63,6 +78,72 @@ if (!reduceMotion) {
 
 updateHeaderState();
 
+function getModalFocusableItems() {
+  if (!contactModal) return [];
+  return Array.from(contactModal.querySelectorAll(focusableSelector))
+    .filter((item) => item.offsetParent !== null);
+}
+
+function openContactModal() {
+  if (!contactModal || !contactDialog) return;
+
+  previousFocus = document.activeElement;
+  contactModal.hidden = false;
+  document.body.classList.add("modal-open");
+  formStatus?.classList.remove("is-error", "is-success");
+  if (formStatus) formStatus.textContent = "";
+
+  window.requestAnimationFrame(() => {
+    const firstInput = contactModal.querySelector("#contact-name");
+    (firstInput || contactDialog).focus();
+  });
+}
+
+function closeContactModal() {
+  if (!contactModal) return;
+
+  contactModal.hidden = true;
+  document.body.classList.remove("modal-open");
+  if (previousFocus && typeof previousFocus.focus === "function") {
+    previousFocus.focus();
+  }
+}
+
+function trapModalFocus(event) {
+  if (!contactModal || contactModal.hidden || event.key !== "Tab") return;
+
+  const focusableItems = getModalFocusableItems();
+  if (!focusableItems.length) return;
+
+  const firstItem = focusableItems[0];
+  const lastItem = focusableItems[focusableItems.length - 1];
+
+  if (event.shiftKey && document.activeElement === firstItem) {
+    event.preventDefault();
+    lastItem.focus();
+  } else if (!event.shiftKey && document.activeElement === lastItem) {
+    event.preventDefault();
+    firstItem.focus();
+  }
+}
+
+contactOpenButtons.forEach((button) => {
+  button.addEventListener("click", openContactModal);
+});
+
+contactCloseButtons.forEach((button) => {
+  button.addEventListener("click", closeContactModal);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && contactModal && !contactModal.hidden) {
+    closeContactModal();
+    return;
+  }
+
+  trapModalFocus(event);
+});
+
 anchorLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
     const targetId = link.getAttribute("href");
@@ -74,6 +155,57 @@ anchorLinks.forEach((link) => {
     scrollToSection(targetId);
     window.history.replaceState(null, "", targetId);
   });
+});
+
+contactForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (!contactForm.checkValidity()) {
+    formStatus?.classList.add("is-error");
+    formStatus?.classList.remove("is-success");
+    if (formStatus) formStatus.textContent = "Compili i campi obbligatori prima dell'invio.";
+    contactForm.reportValidity();
+    return;
+  }
+
+  const endpoint = contactForm.getAttribute("action") || "";
+  const submitButton = contactForm.querySelector("button[type='submit']");
+
+  if (!endpoint) {
+    formStatus?.classList.add("is-error");
+    formStatus?.classList.remove("is-success");
+    if (formStatus) formStatus.textContent = "Endpoint del modulo non ancora configurato.";
+    return;
+  }
+
+  submitButton.disabled = true;
+  formStatus?.classList.remove("is-error", "is-success");
+  if (formStatus) formStatus.textContent = "Invio in corso...";
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      body: new FormData(contactForm),
+      headers: {
+        "Accept": "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error("Invio non riuscito");
+    }
+
+    contactForm.reset();
+    formStatus?.classList.add("is-success");
+    if (formStatus) {
+      formStatus.textContent = "Grazie, la richiesta \u00e8 stata inviata. Lo Studio la ricontatter\u00e0 al pi\u00f9 presto.";
+    }
+  } catch (error) {
+    formStatus?.classList.add("is-error");
+    if (formStatus) formStatus.textContent = "Invio non riuscito. Riprovare o contattare lo Studio via email.";
+  } finally {
+    submitButton.disabled = false;
+  }
 });
 
 window.addEventListener("load", () => {

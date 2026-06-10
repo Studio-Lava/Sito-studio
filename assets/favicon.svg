@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Studio Lava">
+  <rect width="64" height="64" rx="10" fill="#FDFCF9"/>
+  <path fill="#234F50" d="M10 45c9-15 17-28 30-29 9-1 16 5 17 13 1 8-5 15-13 18 4-5 4-11 0-15-6-6-17-3-24 7-2 2-4 4-6 6h-4z"/>
+  <path fill="#A2B296" d="M20 46c8-8 14-14 23-14 5 0 10 2 12 6-4 5-9 8-16 9-6 1-12 1-19-1z"/>
+  <path fill="#ABB1DF" d="M38 44c7-4 12-11 17-21l7 21H48l4-6h4l-3-9c-4 7-8 12-15 15z"/>
+</svg>

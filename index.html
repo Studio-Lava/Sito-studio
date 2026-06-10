@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Studio Lava affianca aziende e datori di lavoro nella gestione degli adempimenti giuslavoristici, previdenziali e assistenziali.">
   <title>Studio Lava Giovanni - Consulente del Lavoro a Torino</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
   <script type="application/ld+json">
@@ -59,7 +61,7 @@
           aggiornato e personalizzato.
         </p>
         <div class="hero-actions" aria-label="Azioni principali">
-          <a class="button primary" href="#contatti">Contatta lo Studio</a>
+          <button class="button primary" type="button" data-contact-open>Contatta lo Studio</button>
           <a class="button secondary" href="#servizi">Consulta i servizi</a>
         </div>
       </div>
@@ -98,11 +100,11 @@
         <p class="numbers-title">Lo Studio in numeri</p>
         <div class="numbers-grid">
           <div>
-            <strong>10+</strong>
+            <strong>13+</strong>
             <span>Anni di esperienza</span>
           </div>
           <div>
-            <strong>300+</strong>
+            <strong>200+</strong>
             <span>Aziende assistite</span>
           </div>
           <div>
@@ -190,7 +192,7 @@
           </p>
         </div>
         <div class="final-cta-actions">
-          <a class="button light" href="#contatti">Contatta lo Studio</a>
+          <button class="button light" type="button" data-contact-open>Contatta lo Studio</button>
           <a class="button ghost" href="#servizi">Consulta i servizi</a>
         </div>
       </div>
@@ -211,7 +213,7 @@
             <strong>Orari di apertura</strong>
             <span>Lun-Ven</span>
             <span>9:00 - 13:00</span>
-            <span>14:00 - 17:00</span>
+            <span>14:00 - 18:00</span>
           </p>
           <p><strong>Telefono</strong><br><a href="tel:+390114051299">011.4051299</a></p>
           <p><strong>Email</strong><br><a href="mailto:amministrazione@studiolava.it">amministrazione@studiolava.it</a></p>
@@ -220,6 +222,52 @@
       </div>
     </section>
   </main>
+
+  <div class="contact-modal" data-contact-modal hidden>
+    <div class="contact-modal__backdrop" data-contact-close></div>
+    <div class="contact-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" aria-describedby="contact-modal-desc" tabindex="-1">
+      <button class="contact-modal__close" type="button" data-contact-close aria-label="Chiudi modulo contatti">&times;</button>
+      <p class="eyebrow">Contatti</p>
+      <h2 id="contact-modal-title">Contatta lo Studio</h2>
+      <p id="contact-modal-desc" class="modal-intro">
+        Compili il modulo: lo Studio la ricontattera al piu presto.
+      </p>
+      <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" data-contact-form novalidate>
+        <input type="hidden" name="access_key" value="1d9c2e42-5f76-4a7f-acc6-6acd875a1749">
+        <div class="form-field">
+          <label for="contact-name">Nome e cognome <span aria-hidden="true">*</span></label>
+          <input id="contact-name" name="nome_cognome" type="text" autocomplete="name" required>
+        </div>
+        <div class="form-field">
+          <label for="contact-company">Azienda</label>
+          <input id="contact-company" name="azienda" type="text" autocomplete="organization">
+        </div>
+        <div class="form-field">
+          <label for="contact-email">Email <span aria-hidden="true">*</span></label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="form-field">
+          <label for="contact-phone">Telefono</label>
+          <input id="contact-phone" name="telefono" type="tel" autocomplete="tel">
+        </div>
+        <div class="form-field form-field--full">
+          <label for="contact-message">Messaggio <span aria-hidden="true">*</span></label>
+          <textarea id="contact-message" name="messaggio" rows="5" required></textarea>
+        </div>
+        <div class="privacy-field form-field--full">
+          <input id="contact-privacy" name="privacy" type="checkbox" required>
+          <label for="contact-privacy">
+            Ho letto l'<a href="privacy.html" target="_blank" rel="noopener">Informativa Privacy</a> e acconsento al trattamento dei dati per essere ricontattato.
+          </label>
+        </div>
+        <input type="hidden" name="origine" value="Modulo contatti sito Studio Lava">
+        <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+        <div class="form-actions form-field--full">
+          <button class="button primary" type="submit">Invia richiesta</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <p>
