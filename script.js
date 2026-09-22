@@ -163,7 +163,7 @@ contactForm?.addEventListener("submit", async (event) => {
   if (!contactForm.checkValidity()) {
     formStatus?.classList.add("is-error");
     formStatus?.classList.remove("is-success");
-    if (formStatus) formStatus.textContent = "Compili i campi obbligatori prima dell'invio.";
+    if (formStatus) formStatus.textContent = "Compila i campi obbligatori prima dell'invio.";
     contactForm.reportValidity();
     return;
   }
@@ -198,11 +198,11 @@ contactForm?.addEventListener("submit", async (event) => {
     contactForm.reset();
     formStatus?.classList.add("is-success");
     if (formStatus) {
-      formStatus.textContent = "Grazie, la richiesta \u00e8 stata inviata. Lo Studio la ricontatter\u00e0 al pi\u00f9 presto.";
+      formStatus.textContent = "Grazie, la tua richiesta \u00e8 stata inviata.";
     }
   } catch (error) {
     formStatus?.classList.add("is-error");
-    if (formStatus) formStatus.textContent = "Invio non riuscito. Riprovare o contattare lo Studio via email.";
+    if (formStatus) formStatus.textContent = "Non \u00e8 stato possibile inviare la richiesta. Riprova oppure scrivi a amministrazione@studiolava.it.";
   } finally {
     submitButton.disabled = false;
   }
