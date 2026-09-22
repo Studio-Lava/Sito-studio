@@ -283,6 +283,18 @@ h1 {
   font-size: clamp(1.06rem, 4vw, 1.28rem);
 }
 
+.hero-brand-mark {
+  width: min(190px, 48vw);
+  margin: 24px auto 8px;
+}
+
+.hero-brand-mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
 .hero-actions {
   display: flex;
   flex-direction: column;
@@ -1117,6 +1129,12 @@ h3 {
   .hero-media {
     justify-self: end;
     width: min(370px, 100%);
+  }
+
+  .hero-brand-mark {
+    width: 210px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .people-grid {
