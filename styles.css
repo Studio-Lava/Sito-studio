@@ -1259,37 +1259,18 @@ html.js .main-nav.is-open {
   max-width: 620px;
 }
 
+.hero-brand-mark {
+  width: min(150px, 40vw);
+  margin: 22px 0 0;
+}
+
 .hero-actions {
-  margin-top: 34px;
+  margin-top: 24px;
 }
 
 .hero-media {
   justify-self: center;
   width: min(410px, 100%);
-}
-
-.portrait-caption {
-  position: relative;
-  display: grid;
-  width: calc(100% - 28px);
-  gap: 1px;
-  margin: -24px 0 0 14px;
-  padding: 15px 18px;
-  border-left: 4px solid var(--sage);
-  background: var(--paper);
-  box-shadow: 0 14px 34px rgba(20, 62, 64, 0.1);
-}
-
-.portrait-caption strong {
-  color: var(--ink-strong);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.16rem;
-  font-weight: 500;
-}
-
-.portrait-caption span {
-  color: var(--muted);
-  font-size: 0.86rem;
 }
 
 .proof-strip {
@@ -1299,19 +1280,16 @@ html.js .main-nav.is-open {
 }
 
 .proof-strip__inner {
+  display: grid;
+  gap: 22px;
   max-width: var(--max);
   margin-inline: auto;
 }
 
 .proof-strip p {
+  display: grid;
+  gap: 4px;
   margin: 0;
-}
-
-.proof-strip p:first-child {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 12px;
 }
 
 .proof-strip strong {
@@ -1326,17 +1304,6 @@ html.js .main-nav.is-open {
   color: var(--ink-strong);
   font-size: 0.96rem;
   font-weight: 700;
-}
-
-.card-index,
-.service-index {
-  display: block;
-  margin-bottom: 16px;
-  color: var(--ink);
-  font-size: 0.76rem;
-  font-weight: 850;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .needs-section {
@@ -1401,8 +1368,7 @@ html.js .main-nav.is-open {
 
 .intro-section h2,
 .intro-section h3,
-.intro-section .eyebrow,
-.intro-section .card-index {
+.intro-section .eyebrow {
   color: var(--paper);
 }
 
@@ -1429,11 +1395,6 @@ html.js .main-nav.is-open {
 .approach-points article {
   padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-.approach-points .card-index {
-  margin-bottom: 7px;
-  opacity: 0.65;
 }
 
 .approach-points h3 {
@@ -1549,14 +1510,6 @@ html.js .main-nav.is-open {
   background: var(--paper);
 }
 
-.journey-card .card-index {
-  color: var(--sage);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 2.4rem;
-  font-weight: 500;
-  line-height: 1;
-}
-
 .journey-card p {
   margin-bottom: 0;
 }
@@ -1577,6 +1530,16 @@ html.js .main-nav.is-open {
 }
 
 @media (min-width: 700px) {
+  .proof-strip__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px;
+  }
+
+  .proof-strip p + p {
+    padding-left: 36px;
+    border-left: 1px solid var(--line);
+  }
+
   .needs-grid,
   .journey-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1598,6 +1561,10 @@ html.js .main-nav.is-open {
 }
 
 @media (min-width: 980px) {
+  .hero-brand-mark {
+    width: 190px;
+  }
+
   .hero {
     grid-template-columns: minmax(0, 1fr) minmax(320px, 360px);
     min-height: 710px;
