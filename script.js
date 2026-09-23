@@ -1,5 +1,8 @@
+document.documentElement.classList.add("js");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const header = document.querySelector(".site-header");
+const menuToggle = document.querySelector("[data-menu-toggle]");
+const mainNav = document.querySelector(".main-nav");
 const revealItems = document.querySelectorAll("[data-reveal], .person-card, .services-grid li");
 const anchorLinks = document.querySelectorAll('a[href^="#"]');
 const contactModal = document.querySelector("[data-contact-modal]");
@@ -17,6 +20,20 @@ const focusableSelector = [
   "[tabindex]:not([tabindex='-1'])"
 ].join(",");
 let previousFocus = null;
+
+function closeMenu() {
+  mainNav?.classList.remove("is-open");
+  menuToggle?.setAttribute("aria-expanded", "false");
+}
+
+menuToggle?.addEventListener("click", () => {
+  const isOpen = mainNav?.classList.toggle("is-open") || false;
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+mainNav?.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", closeMenu);
+});
 
 function updateHeaderState() {
   header?.classList.toggle("is-scrolled", window.scrollY > 12);
@@ -136,6 +153,10 @@ contactCloseButtons.forEach((button) => {
 });
 
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && mainNav?.classList.contains("is-open")) {
+    closeMenu();
+    menuToggle?.focus();
+  }
   if (event.key === "Escape" && contactModal && !contactModal.hidden) {
     closeContactModal();
     return;
@@ -211,5 +232,9 @@ contactForm?.addEventListener("submit", async (event) => {
 window.addEventListener("load", () => {
   if (window.location.hash && document.querySelector(window.location.hash)) {
     window.requestAnimationFrame(() => scrollToSection(window.location.hash, "auto"));
+  }
+  if (new URLSearchParams(window.location.search).get("contatto") === "1" && contactModal) {
+    openContactModal();
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.hash}`);
   }
 });
