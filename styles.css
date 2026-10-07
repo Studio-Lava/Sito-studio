@@ -1603,3 +1603,45 @@ html.js .main-nav.is-open {
     padding: 0;
   }
 }
+
+
+/* Accessi alla pagina Paghe e consulenza. */
+.payroll-access {
+  gap: 10px;
+  text-align: center;
+  max-width: 100%;
+}
+
+.service-group .payroll-access,
+.service-detail .payroll-access {
+  margin-top: 22px;
+}
+
+.services-overview-hero {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.services-overview-hero h1 {
+  font-size: clamp(2.3rem, 6.5vw, 4.8rem);
+}
+
+.services-overview-hero .hero-actions {
+  margin-top: 24px;
+}
+
+.services-location {
+  margin: 18px 0 0;
+  color: var(--ink);
+}
+
+.main-nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+@media (min-width: 980px) {
+  .services-overview-hero {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+}
