@@ -1,0 +1,45 @@
+
+.cost-breadcrumb {display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px;color:var(--muted);font-size:.9rem;}
+.cost-breadcrumb a {color:var(--ink);text-underline-offset:4px;}
+.cost-page .page-hero h1 {max-width:960px;font-size:clamp(2.5rem,6vw,4.65rem);line-height:1.07;}
+.cost-page .hero-actions {align-items:center;}
+.cost-page .hero-actions .text-link {margin-top:0;}
+.cost-inner {max-width:var(--max);margin-inline:auto;}
+.cost-section {border-bottom:1px solid var(--line);}
+.cost-section:nth-of-type(even) {background:var(--ivory);}
+.cost-section .section-heading {margin-bottom:32px;max-width:900px;}
+.cost-summary {display:grid;gap:24px;}
+.cost-summary article {padding:24px;background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:8px;}
+.cost-summary h3,.incentive-list h3 {font-size:1.3rem;margin:0 0 14px;}
+.cost-summary p {margin:0;}
+.cost-prose {max-width:850px;}
+.cost-prose p:last-child {margin-bottom:0;}
+.cost-prose ul {padding-left:22px;display:grid;gap:12px;margin-bottom:24px;}
+.incentive-list {display:grid;gap:0;margin-top:30px;max-width:900px;}
+.incentive-list article {padding:26px 0;border-top:1px solid var(--line);}
+.incentive-list p {margin:0;}
+.incentive-check {padding-top:26px;border-top:1px solid var(--line);}
+@media(min-width:850px) {.cost-summary {grid-template-columns:repeat(3,minmax(0,1fr));}}
+
+.cost-comparison {max-width:900px;margin:32px 0;}
+.cost-comparison table {width:100%;border-collapse:collapse;table-layout:fixed;}
+.cost-comparison caption {text-align:left;color:var(--muted);font-size:.9rem;margin-bottom:16px;}
+.cost-comparison th,.cost-comparison td {padding:20px 18px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;}
+.cost-comparison thead th {color:var(--ink-strong);background:rgba(162,178,150,.12);font-size:1rem;}
+.cost-comparison thead th:first-child {width:40%;}
+.cost-comparison tbody th {font-weight:500;}
+.cost-comparison td {font-variant-numeric:tabular-nums;white-space:nowrap;font-size:1.2rem;}
+.cost-comparison .cost-total-row {color:var(--ink-strong);}
+.cost-comparison .cost-total-row td {font-weight:700;font-size:1.6rem;}
+.cost-example-notes strong {color:var(--ink-strong);}
+@media(max-width:600px) {
+  .cost-comparison th,.cost-comparison td {padding:15px 6px;}
+  .cost-comparison thead th {font-size:.86rem;}
+  .cost-comparison thead th:first-child {width:35%;}
+  .cost-comparison tbody th {font-size:.9rem;line-height:1.35;}
+  .cost-comparison td,.cost-comparison .cost-total-row td {font-size:1rem;}
+}
+
+.incentive-options {display:flex;flex-wrap:wrap;gap:12px 28px;list-style:none;padding:0;margin:26px 0 0;color:var(--ink-strong);font-weight:600;}
+.incentive-options li {padding-bottom:8px;border-bottom:2px solid var(--sage);}
+.cost-example-notes p:first-child {font-size:.93rem;color:var(--muted);}

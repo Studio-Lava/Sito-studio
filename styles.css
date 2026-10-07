@@ -1645,3 +1645,11 @@ html.js .main-nav.is-open {
     padding-bottom: 64px;
   }
 }
+
+/* Navigazione con accesso alla pagina costo del dipendente. */
+@media(min-width:1050px) and (max-width:1350px) {
+  .site-header {padding-inline:24px;gap:10px;}
+  .brand-link {flex-shrink:0;}
+  .main-nav {font-size:.84rem;gap:0;}
+  .main-nav a {padding-inline:7px;}
+}
