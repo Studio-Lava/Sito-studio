@@ -1,0 +1,21 @@
+/* Stili della pagina paghe, coerenti con il sito esistente. */
+.payroll-breadcrumb { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; color:var(--muted); font-size:.9rem; }
+.payroll-breadcrumb a, .payroll-faq a { color:var(--ink); text-underline-offset:4px; }
+.payroll-page .page-hero h1 { max-width:920px; font-size:clamp(2.5rem,6vw,4.65rem); }
+.payroll-page .hero-actions { align-items:center; }
+.payroll-page .hero-actions .text-link { margin-top:0; }
+.payroll-overview__inner, .payroll-grid, .payroll-faq { max-width:var(--max); margin-inline:auto; }
+.payroll-overview__inner { display:grid; gap:28px; }
+.payroll-overview__inner .section-heading { margin:0; }
+.payroll-copy p:last-child { margin-bottom:0; }
+.payroll-copy ul { padding-left:22px; display:grid; gap:10px; }
+.payroll-services { background:var(--ivory); }
+.payroll-grid { display:grid; gap:20px; }
+.payroll-grid h3 { font-size:1.4rem; }
+.payroll-questions { background:rgba(162,178,150,.11); }
+.payroll-faq { display:grid; gap:0; }
+.payroll-faq article { padding:28px 0; border-top:1px solid var(--line); }
+.payroll-faq h3 { font-size:1.35rem; }
+.payroll-faq p { max-width:820px; margin-bottom:0; }
+@media(min-width:700px) { .payroll-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(min-width:980px) { .payroll-overview__inner { grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:70px; } }
