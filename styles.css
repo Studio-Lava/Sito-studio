@@ -1508,6 +1508,7 @@ a.need-card:focus-visible {
 .aside-mark {
   display: block;
   width: 86px;
+  height: auto;
   margin-bottom: 26px;
 }
 
