@@ -1,0 +1,72 @@
+name: Studio Lava — News e sito
+
+on:
+  workflow_dispatch:
+    inputs:
+      pubblica:
+        description: Pubblica il sito dopo una sincronizzazione riuscita
+        type: boolean
+        default: false
+  schedule:
+    - cron: '23 7,13,19 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: studio-lava-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r strumenti/requirements.txt
+      - uses: actions/cache/restore@v5
+        id: news
+        with:
+          path: |
+            site/news-feed.js
+            site/assets/instagram
+          key: studio-news-v1-${{ hashFiles('site/news-feed.js') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: studio-news-v1-${{ hashFiles('site/news-feed.js') }}-
+      - name: Leggi i caroselli e rigenera le pagine
+        env:
+          STUDIO_IG_ACCOUNT_ID: ${{ vars.STUDIO_IG_ACCOUNT_ID }}
+          STUDIO_IG_TOKEN: ${{ secrets.STUDIO_IG_TOKEN }}
+        run: python strumenti/prepara_rilascio_studiolava.py --sincronizza graph.facebook.com --sito site
+      - uses: actions/cache/save@v5
+        if: github.event_name == 'schedule' || inputs.pubblica
+        with:
+          path: |
+            site/news-feed.js
+            site/assets/instagram
+          key: ${{ steps.news.outputs.cache-primary-key }}
+      - uses: actions/upload-pages-artifact@v4
+        if: github.event_name == 'schedule' || inputs.pubblica
+        with:
+          path: site
+
+  deploy:
+    if: github.event_name == 'schedule' || inputs.pubblica
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: pages
