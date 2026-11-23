@@ -1,0 +1,75 @@
+name: Collaudo lettura Instagram Studio Lava
+on:
+  push:
+    branches: [codex/collaudo-lettura-news]
+permissions:
+  contents: read
+jobs:
+  leggi:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verifica account e slide del carosello più recente
+        env:
+          STUDIO_IG_ACCOUNT_ID: ${{ vars.STUDIO_IG_ACCOUNT_ID }}
+          STUDIO_IG_TOKEN: ${{ secrets.STUDIO_IG_TOKEN }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import sys
+          from urllib.error import HTTPError, URLError
+          from urllib.parse import urlencode, urlsplit
+          from urllib.request import HTTPRedirectHandler, Request, build_opener
+
+          class NoRedirect(HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  return None
+
+          opener = build_opener(NoRedirect())
+          account = os.environ.get("STUDIO_IG_ACCOUNT_ID", "")
+          token = os.environ.get("STUDIO_IG_TOKEN", "")
+          if not account.isdecimal() or not token:
+              sys.exit("Configurazione Instagram incompleta.")
+
+          def graph(path, **params):
+              url = "https://graph.facebook.com/v27.0/" + path + "?" + urlencode(params)
+              with opener.open(Request(url, headers={"Authorization": "Bearer " + token}), timeout=20) as response:
+                  return json.load(response)
+
+          try:
+              profile = graph(account, fields="id,username")
+              if profile.get("username") != "studio_lava_cdl":
+                  sys.exit("L'account restituito da Meta non coincide con quello dello Studio.")
+              recent = graph(account + "/media", limit=20, fields="id,media_type,permalink,timestamp")["data"]
+              album = max((p for p in recent if p["media_type"] == "CAROUSEL_ALBUM"),
+                          key=lambda p: p["timestamp"])
+              slides = graph(album["id"] + "/children", limit=50, fields="id,media_type,media_url")["data"]
+              if len(slides) < 2 or len({slide["id"] for slide in slides}) != len(slides):
+                  sys.exit("Le slide restituite da Meta sono incomplete.")
+              hosts = ("cdninstagram.com", "fbcdn.net", "fbsbx.com", "instagram.com")
+              for slide in slides:
+                  if slide.get("media_type") != "IMAGE" or not slide.get("media_url"):
+                      sys.exit("L'ultimo carosello non contiene solo immagini.")
+                  url = urlsplit(slide["media_url"])
+                  host = url.hostname or ""
+                  if url.scheme != "https" or not any(host == h or host.endswith("." + h) for h in hosts):
+                      sys.exit("Dominio immagine inatteso.")
+                  with opener.open(Request(slide["media_url"], headers={"Range": "bytes=0-63"}), timeout=20) as response:
+                      if response.headers.get_content_maintype() != "image" or not response.read(64):
+                          sys.exit("Una slide non si apre.")
+              print("Profilo Instagram verificato. Carosello del " + album["timestamp"][:10]
+                    + ": tutte le " + str(len(slides)) + " slide si aprono. Nessun deploy.")
+          except HTTPError as exc:
+              try:
+                  error = json.loads(exc.read(4096)).get("error", {})
+              except (ValueError, OSError):
+                  error = {}
+              code = error.get("code")
+              subcode = error.get("error_subcode")
+              sys.exit(f"Richiesta respinta: HTTP {exc.code}, codice Meta {code if isinstance(code, int) else '-'}, "
+                       f"sottocodice {subcode if isinstance(subcode, int) else '-'}.")
+          except (KeyError, ValueError, URLError) as exc:
+              sys.exit("Lettura incompleta: " + type(exc).__name__)
+          PY
