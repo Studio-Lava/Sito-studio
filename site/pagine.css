@@ -1,0 +1,95 @@
+/* Pagine di servizio, informativa e contatti della copia privata. */
+.inner-hero { background: var(--tint); border-bottom: 1px solid var(--line); }
+.inner-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(14rem, .35fr); align-items: end; gap: clamp(2rem, 7vw, 7rem); padding-block: clamp(2.25rem, 4.5vw, 4.7rem); }
+.trail { display: flex; gap: .65rem; align-items: center; font-size: .88rem; color: var(--muted); margin-bottom: 1.5rem; }
+.trail a, .interior p a { text-decoration: underline; text-underline-offset: .2em; }
+.inner-lead h1, .privacy-content h1 { font-size: clamp(2.65rem, 4.9vw, 4.8rem); line-height: .99; letter-spacing: -.055em; max-width: 19ch; }
+.inner-lead .page-intro { max-width: 62ch; font-size: clamp(1.04rem, 1.45vw, 1.23rem); line-height: 1.52; color: var(--muted); margin-top: 1.35rem; }
+.inner-lead .hero-actions { margin-top: 1.45rem; }
+.page-guide { border-top: 2px solid var(--ink); padding-top: 1.1rem; }
+.page-guide ul { list-style: none; padding: 0; margin: .65rem 0 0; }
+.page-guide li + li { border-top: 1px solid var(--line); }
+.page-guide a { display: block; padding: .65rem .1rem; font-size: .99rem; line-height: 1.4; }
+.interior { --inner: min(100% - clamp(2.5rem, 10vw, 10rem), 71rem); }
+.interior > .section { width: var(--inner); margin-inline: auto; padding-block: clamp(2.3rem, 4.5vw, 4.2rem); }
+.interior > .section + .section { border-top: 1px solid var(--line); }
+.interior h2, .enquiry h2 { font-size: clamp(1.9rem, 3.35vw, 3.42rem); letter-spacing: -.045em; line-height: 1.07; }
+.interior h3 { font-size: clamp(1.38rem, 2.05vw, 2rem); letter-spacing: -.03em; line-height: 1.12; }
+.interior .section p:not(.eyebrow), .interior .section li, .enquiry-intro { color: var(--muted); font-size: 1.04rem; line-height: 1.58; }
+.interior .section p + p, .interior li + li { margin-block-start: .52rem; }
+.interior ul:not(.incentive-options) { padding-inline-start: 1.18rem; }
+.interior .page-guide ul { padding-inline-start: 0; }
+.interior .page-guide li { margin: 0; }
+.service-detail { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); gap: clamp(1rem, 6vw, 6rem); padding-block: 1.8rem; align-items: baseline; }
+.service-detail:first-child { padding-top: 0; }
+.service-detail + .service-detail { border-top: 1px solid var(--line); }
+.service-detail h2 { margin: 0; font-size: clamp(1.65rem, 2.65vw, 2.65rem); }
+.service-detail p, .journey-grid p, .payroll-grid p, .payroll-faq p { margin-top: .7rem; }
+.service-detail ul { margin: 0; }
+.service-detail .text-link { margin-top: .45rem; }
+.payroll-overview__inner, .change-intro__inner, .change-note__inner, .cost-inner { display: grid; grid-template-columns: minmax(0,.82fr) minmax(0,1.18fr); column-gap: clamp(1.7rem,6vw,6rem); row-gap: 1rem; }
+.cost-inner .section-heading { grid-column: 1; grid-row: 1 / span 2; }
+.cost-inner > :not(.section-heading) { grid-column: 2; }
+.cost-comparison { grid-column: 1 / -1 !important; margin-block: 1rem .6rem; }
+.cost-inner:has(.cost-comparison) .section-heading { grid-row: 1; }
+.cost-inner .cost-example-notes { grid-column: 1 / -1; max-width: 72ch; }
+.interior table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.interior caption { text-align: left; font-weight: 600; padding-bottom: .8rem; color: var(--muted); }
+.interior td, .interior th { padding: .9rem 1rem; border-bottom: 1px solid var(--line); text-align: end; }
+.interior th:first-child { text-align: left; }
+.interior thead { background: var(--ink); color: var(--paper); }
+.cost-total-row { background: var(--tint); font-weight: 650; }
+.incentive-options { padding-left: 1.15rem; margin-block: .2rem 0; }
+.journey-grid, .payroll-grid, .payroll-faq { margin-top: 1.75rem; display: grid; gap: 1.55rem 2.1rem; }
+.journey-grid, .payroll-faq { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.payroll-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.journey-grid article, .payroll-grid article, .payroll-faq article { border-top: 1px solid var(--line); padding-top: 1.1rem; }
+.change-intro__inner > .journey-card { background: var(--tint); padding: clamp(1.3rem,3vw,2rem); align-self: start; }
+.change-intro__inner .section-heading p:last-child { margin-top: 1rem; }
+.interior .final-cta-section { width: 100%; background: var(--ink); color: var(--paper); padding-inline: max(calc((100% - 71rem) / 2),clamp(1.25rem,5vw,5rem)); }
+.final-cta { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+.final-cta > div:first-child { max-width: 46rem; }
+.interior .final-cta p:not(.eyebrow), .final-cta .eyebrow { color: #dce5d9; }
+.final-cta p:last-child { margin-top: .8rem; }
+.final-cta .light { display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; min-height: 44px; padding: .8rem 1.25rem; background: var(--paper); color: var(--ink); font-weight: 600; }
+.interior .privacy-content { max-width: 49rem; }
+.privacy-content .section-heading { padding-bottom: 1.8rem; border-bottom: 1px solid var(--line); margin-bottom: 1.8rem; }
+.privacy-content h1 { margin-top: .7rem; }
+.privacy-text h2 { margin: 1.65rem 0 .5rem; font-size: clamp(1.45rem,2.3vw,2rem); }
+.enquiry-intro { margin-top: 1rem; max-width: 31ch; }
+.contact-form { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; align-content: start; }
+.form-field, .form-field label { display: block; }
+.form-field label { margin: 0 0 .38rem; font-weight: 600; }
+.form-field input, .form-field textarea { width: 100%; font: inherit; padding: .7rem; border: 1px solid #798b80; border-radius: .15rem; background: #fff; color: var(--ink); }
+.form-field textarea { resize: vertical; min-height: 7.5rem; }
+.form-field--full, .contact-form .required-note, .contact-form .form-status { grid-column: 1 / -1; }
+.privacy-field { display: flex; align-items: flex-start; gap: .65rem; }
+.privacy-field label, .required-note { font-size: .92rem; line-height: 1.5; }
+.privacy-field input { flex: 0 0 1.15rem; height: 1.15rem; margin: .12rem 0 0; accent-color: var(--ink); }
+.privacy-field a { text-decoration: underline; }
+.team-profiles p:not(.team-role) + p { margin-top: .8em; }
+@media (min-width: 1050px) {
+  .team-profiles { grid-template-columns: 1.3fr 1fr 1fr; }
+}
+.contact-form button { border: 0; }
+.form-status:empty { display: none; }
+.form-status { color: var(--ink); background: var(--tint); padding: .85rem; }
+@media(max-width:760px) {
+  .inner-hero-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+  .inner-lead h1 { max-width: 22ch; }
+  .page-guide { padding-top: .8rem; }
+  .page-guide ul { display: flex; gap: .2rem 1.25rem; flex-wrap: wrap; margin-top: .25rem; }
+  .page-guide li + li { border: 0; }
+  .page-guide a { text-decoration: underline; text-underline-offset: .22em; }
+  .service-detail, .payroll-overview__inner, .change-intro__inner, .change-note__inner, .cost-inner { grid-template-columns: 1fr; }
+  .cost-inner > :not(.section-heading), .cost-inner .section-heading { grid-column: 1; grid-row: auto; }
+  .journey-grid, .payroll-grid, .payroll-faq { grid-template-columns: 1fr; }
+  .final-cta { align-items: start; flex-direction: column; gap: 1.2rem; }
+}
+@media(max-width:480px) {
+  .inner-lead h1, .privacy-content h1 { font-size: clamp(2.35rem,10vw,3rem); }
+  .interior table { font-size: .875rem; }
+  .interior td, .interior th { padding: .65rem .28rem; }
+  .interior td { white-space: nowrap; }
+  .contact-form { grid-template-columns: 1fr; }
+}

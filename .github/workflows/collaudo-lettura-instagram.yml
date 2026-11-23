@@ -1,92 +1,82 @@
-name: Collaudo lettura Instagram Studio Lava
+name: Collaudo aggiornamento e pagine Studio Lava
+
 on:
   push:
     branches: [codex/collaudo-lettura-news]
+
 permissions:
   contents: read
+
 jobs:
-  leggi:
+  verifica:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
-      - name: Verifica account e slide del carosello più recente
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r strumenti/requirements.txt
+      - name: Riparte da un archivio precedente all’ultima uscita
+        env:
+          PYTHONPATH: strumenti
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from sincronizza_news_anteprima import read_feed, feed_text
+
+          path = Path("site/news-feed.js")
+          feed = read_feed(path)
+          assert len(feed) >= 3
+          Path("ultimo-post-atteso.txt").write_text(feed[0]["post"], encoding="utf-8")
+          path.write_text(feed_text(feed[1:]), encoding="utf-8")
+          PY
+      - name: Importa da Meta e rigenera entrambe le pagine
+        env:
+          STUDIO_IG_ACCOUNT_ID: ${{ vars.STUDIO_IG_ACCOUNT_ID }}
+          STUDIO_IG_TOKEN: ${{ secrets.STUDIO_IG_TOKEN }}
+        run: python strumenti/prepara_rilascio_studiolava.py --sincronizza graph.facebook.com --sito site
+      - name: Verifica copertina, link e integrità delle slide
+        env:
+          PYTHONPATH: strumenti
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from lxml import html, etree
+          from PIL import Image
+          from sincronizza_news_anteprima import read_feed, shortcode
+
+          site = Path("site")
+          expected = shortcode(Path("ultimo-post-atteso.txt").read_text(encoding="utf-8"))
+          feed = read_feed(site / "news-feed.js")
+          latest = feed[0]
+          assert sum(shortcode(a["post"]) == expected for a in feed) == 1
+          assert shortcode(latest["post"]) == expected or latest["date"] >= "2026-11-17"
+          assert latest["key"].startswith("ig-")
+          for slide in latest["slides"]:
+              with Image.open(site / slide["src"]) as image:
+                  image.verify()
+
+          home = html.parse(site / "index.html")
+          archive = html.parse(site / "news.html")
+          assert home.xpath('string(//article[@class="home-lead"]//h3/a/@href)') == "news.html#" + latest["key"]
+          assert archive.xpath('string(//article[@class="feature"]/@id)') == latest["key"]
+          assert archive.xpath('string(//article[@class="feature"]//img/@src)') == latest["slides"][0]["src"]
+          assert archive.xpath('string(//article[@class="feature"]//a[@class="link-action"]/@href)') == latest["post"]
+          assert all(not html.parse(p).xpath('//meta[@name="robots" and contains(@content,"noindex")]')
+                     for p in site.glob("*.html"))
+          sitemap = etree.parse(site / "sitemap.xml")
+          assert len(sitemap.getroot()) == len(list(site.glob("*.html")))
+          print("Metadati e nuove pagine verificati. Tutte le " + str(len(latest["slides"])) + " slide sono integre.")
+          PY
+      - name: Ripeti l’aggiornamento e verifica che non ci siano duplicati
         env:
           STUDIO_IG_ACCOUNT_ID: ${{ vars.STUDIO_IG_ACCOUNT_ID }}
           STUDIO_IG_TOKEN: ${{ secrets.STUDIO_IG_TOKEN }}
         shell: bash
         run: |
-          python3 - <<'PY'
-          import json
-          import os
-          import sys
-          from urllib.error import HTTPError, URLError
-          from urllib.parse import urlencode, urlsplit
-          from urllib.request import HTTPRedirectHandler, Request, build_opener
-
-          class NoRedirect(HTTPRedirectHandler):
-              def redirect_request(self, req, fp, code, msg, headers, newurl):
-                  return None
-
-          opener = build_opener(NoRedirect())
-          account = os.environ.get("STUDIO_IG_ACCOUNT_ID", "")
-          token = os.environ.get("STUDIO_IG_TOKEN", "")
-          if not account.isdecimal() or not token:
-              sys.exit("Configurazione Instagram incompleta.")
-
-          def graph(path, **params):
-              url = "https://graph.facebook.com/v27.0/" + path + "?" + urlencode(params)
-              with opener.open(Request(url, headers={"Authorization": "Bearer " + token}), timeout=20) as response:
-                  return json.load(response)
-
-          stage = "identità del token"
-          try:
-              graph("me", fields="id")
-              print("Identità del token riconosciuta da Meta.")
-              for endpoint, fields, name in (
-                  ("me/assigned_instagram_accounts", "id", "account Instagram assegnati"),
-                  ("105192922268652", "instagram_business_account", "account collegato alla Pagina"),
-              ):
-                  try:
-                      data = graph(endpoint, fields=fields)
-                      objects = data.get("data", [data.get("instagram_business_account") or {}])
-                      print(name + ": profilo dello Studio presente = " +
-                            str(any(str(item.get("id")) == account for item in objects)))
-                  except HTTPError as exc:
-                      print(name + ": HTTP " + str(exc.code))
-              stage = "lettura del profilo Instagram"
-              profile = graph(account, fields="id,username")
-              if profile.get("username") != "studio_lava_cdl":
-                  sys.exit("L'account restituito da Meta non coincide con quello dello Studio.")
-              stage = "elenco dei post Instagram"
-              recent = graph(account + "/media", limit=20, fields="id,media_type,permalink,timestamp")["data"]
-              album = max((p for p in recent if p["media_type"] == "CAROUSEL_ALBUM"),
-                          key=lambda p: p["timestamp"])
-              stage = "lettura delle slide"
-              slides = graph(album["id"] + "/children", limit=50, fields="id,media_type,media_url")["data"]
-              if len(slides) < 2 or len({slide["id"] for slide in slides}) != len(slides):
-                  sys.exit("Le slide restituite da Meta sono incomplete.")
-              hosts = ("cdninstagram.com", "fbcdn.net", "fbsbx.com", "instagram.com")
-              for slide in slides:
-                  if slide.get("media_type") != "IMAGE" or not slide.get("media_url"):
-                      sys.exit("L'ultimo carosello non contiene solo immagini.")
-                  url = urlsplit(slide["media_url"])
-                  host = url.hostname or ""
-                  if url.scheme != "https" or not any(host == h or host.endswith("." + h) for h in hosts):
-                      sys.exit("Dominio immagine inatteso.")
-                  with opener.open(Request(slide["media_url"], headers={"Range": "bytes=0-63"}), timeout=20) as response:
-                      if response.headers.get_content_maintype() != "image" or not response.read(64):
-                          sys.exit("Una slide non si apre.")
-              print("Profilo Instagram verificato. Carosello del " + album["timestamp"][:10]
-                    + ": tutte le " + str(len(slides)) + " slide si aprono. Nessun deploy.")
-          except HTTPError as exc:
-              try:
-                  error = json.loads(exc.read(4096)).get("error", {})
-              except (ValueError, OSError):
-                  error = {}
-              code = error.get("code")
-              subcode = error.get("error_subcode")
-              sys.exit(f"Richiesta respinta durante {stage}: HTTP {exc.code}, codice Meta {code if isinstance(code, int) else '-'}, "
-                       f"sottocodice {subcode if isinstance(subcode, int) else '-'}.")
-          except (KeyError, ValueError, URLError) as exc:
-              sys.exit("Lettura incompleta: " + type(exc).__name__)
-          PY
+          sha256sum site/index.html site/news.html site/news-feed.js > "$RUNNER_TEMP/studio-prima"
+          python strumenti/prepara_rilascio_studiolava.py --sincronizza graph.facebook.com --sito site
+          sha256sum --check "$RUNNER_TEMP/studio-prima"
