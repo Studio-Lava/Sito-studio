@@ -38,13 +38,30 @@ jobs:
               with opener.open(Request(url, headers={"Authorization": "Bearer " + token}), timeout=20) as response:
                   return json.load(response)
 
+          stage = "identità del token"
           try:
+              graph("me", fields="id")
+              print("Identità del token riconosciuta da Meta.")
+              for endpoint, fields, name in (
+                  ("me/assigned_instagram_accounts", "id", "account Instagram assegnati"),
+                  ("105192922268652", "instagram_business_account", "account collegato alla Pagina"),
+              ):
+                  try:
+                      data = graph(endpoint, fields=fields)
+                      objects = data.get("data", [data.get("instagram_business_account") or {}])
+                      print(name + ": profilo dello Studio presente = " +
+                            str(any(str(item.get("id")) == account for item in objects)))
+                  except HTTPError as exc:
+                      print(name + ": HTTP " + str(exc.code))
+              stage = "lettura del profilo Instagram"
               profile = graph(account, fields="id,username")
               if profile.get("username") != "studio_lava_cdl":
                   sys.exit("L'account restituito da Meta non coincide con quello dello Studio.")
+              stage = "elenco dei post Instagram"
               recent = graph(account + "/media", limit=20, fields="id,media_type,permalink,timestamp")["data"]
               album = max((p for p in recent if p["media_type"] == "CAROUSEL_ALBUM"),
                           key=lambda p: p["timestamp"])
+              stage = "lettura delle slide"
               slides = graph(album["id"] + "/children", limit=50, fields="id,media_type,media_url")["data"]
               if len(slides) < 2 or len({slide["id"] for slide in slides}) != len(slides):
                   sys.exit("Le slide restituite da Meta sono incomplete.")
@@ -68,7 +85,7 @@ jobs:
                   error = {}
               code = error.get("code")
               subcode = error.get("error_subcode")
-              sys.exit(f"Richiesta respinta: HTTP {exc.code}, codice Meta {code if isinstance(code, int) else '-'}, "
+              sys.exit(f"Richiesta respinta durante {stage}: HTTP {exc.code}, codice Meta {code if isinstance(code, int) else '-'}, "
                        f"sottocodice {subcode if isinstance(subcode, int) else '-'}.")
           except (KeyError, ValueError, URLError) as exc:
               sys.exit("Lettura incompleta: " + type(exc).__name__)
