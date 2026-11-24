@@ -8,7 +8,8 @@ on:
         type: boolean
         default: false
   schedule:
-    - cron: '23 7,13,19 * * *'
+    - cron: '23 8,14,20 * * 2,5'
+      timezone: 'Europe/Rome'
 
 permissions:
   contents: read
